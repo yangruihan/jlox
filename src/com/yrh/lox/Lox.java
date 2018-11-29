@@ -28,7 +28,7 @@ public class Lox {
         BufferedReader reader = new BufferedReader(input);
 
         while (true) {
-            System.out.println("> ");
+            System.out.print("> ");
             run(reader.readLine());
             hadError = false;
         }
@@ -46,17 +46,30 @@ public class Lox {
     private static void run(String source) {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
-    }
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
 
-    public static void error(int line, String msg) {
-        report(line, "", msg);
+        // Stop if there was a syntax error.
+        if (hadError) return;;
+
+        System.out.println(new AstPrinter().print(expression));
     }
 
     private static void report(int line, String where, String msg) {
         System.err.println("[line" + line + "] Error" + where + ": " + msg);
         hadError = true;
     }
+
+    static void error(int line, String msg) {
+        report(line, "", msg);
+    }
+
+    static void error(Token token, String msg) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", msg);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", msg);
+        }
+    }
+
 }
