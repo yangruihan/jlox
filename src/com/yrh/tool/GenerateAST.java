@@ -24,6 +24,11 @@ public class GenerateAST {
                 "Unary    : Token operator, Expr right"
         ));
 
+        defineAST(outputDir, "Stmt", Arrays.asList(
+                "Expression : Expr expression",
+                "Print      : Expr expression"
+        ));
+
         System.out.println("--- Generate Success");
     }
 
