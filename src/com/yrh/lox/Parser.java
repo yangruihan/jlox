@@ -84,6 +84,9 @@ class Parser {
         if (match(PRINT))
             return printStatement();
 
+        if (match(RETURN))
+            return returnStatement();
+
         if (match(WHILE))
             return whileStatement();
 
@@ -91,6 +94,17 @@ class Parser {
             return new Stmt.Block(block());
 
         return exprStatement();
+    }
+
+    private Stmt returnStatement() {
+        Token keyword = previous();
+        Expr value = null;
+        if (!check(SEMICOLON)) {
+            value = expression();
+        }
+
+        consume(SEMICOLON, "Expect ';' after return value.");
+        return new Stmt.Return(keyword, value);
     }
 
     private Stmt forStatement() {

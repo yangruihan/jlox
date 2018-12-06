@@ -10,6 +10,7 @@ abstract class Stmt {
         R visitIfStmt(If stmt);
         R visitFunctionStmt(Function stmt);
         R visitPrintStmt(Print stmt);
+        R visitReturnStmt(Return stmt);
         R visitWhileStmt(While stmt);
         R visitVarStmt(Var stmt);
     }
@@ -80,6 +81,20 @@ abstract class Stmt {
         }
 
         final Expr expression;
+    }
+
+    static class Return extends Stmt {
+        Return(Token keyword, Expr value) {
+            this.keyword = keyword;
+            this.value = value;
+        }
+
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitReturnStmt(this);
+        }
+
+        final Token keyword;
+        final Expr value;
     }
 
     static class While extends Stmt {
