@@ -41,6 +41,7 @@ call           = primary ( "(" arguments? ")" | "." IDENTIFIER )* ;
 arguments      = expression ( "," expression )* ;
 primary        = NUMBER
                  | STRING
+                 | THIS
                  | "false"
                  | "true"
                  | "nil"
