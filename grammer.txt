@@ -46,5 +46,5 @@ primary        = NUMBER
                  | "true"
                  | "nil"
                  | "(" expression ")"
-                 | IDENTIFIER ;
-                 | SUPER "." IDENTIFIER
+                 | IDENTIFIER
+                 | SUPER "." IDENTIFIER ;
